@@ -7,3 +7,4 @@
 - Added before/after ApplicationSet comparison with destination and production-target change reporting.
 - Added policy evaluation for rendered ApplicationSet output with JSON violations.
 - Added Markdown review rendering for compare and policy results.
+- Added blast-radius findings for production expansion and automated prune posture.
