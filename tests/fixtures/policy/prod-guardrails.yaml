@@ -1,0 +1,17 @@
+{
+  "name": "prod-guardrails",
+  "rules": [
+    {
+      "id": "prod-no-auto-prune",
+      "description": "Production targets must not enable automated prune.",
+      "production_only": true,
+      "forbid_automated_prune": true
+    },
+    {
+      "id": "prod-no-mutable-revision",
+      "description": "Production targets must not track mutable revisions.",
+      "production_only": true,
+      "forbid_mutable_revisions": true
+    }
+  ]
+}
