@@ -5,10 +5,10 @@ from typing import Annotated
 
 import typer
 
+from argoscope.adapters import get_renderer_adapter
 from argoscope.analysis import build_preview_report
 from argoscope.diffing import compare_preview_reports
 from argoscope.exceptions import ArgoScopeError
-from argoscope.fixtures import load_rendered_fixture
 from argoscope.policy import evaluate_policy, load_policy
 from argoscope.rendering import load_render_input, render_markdown
 from argoscope.snapshot_io import load_preview_report
@@ -33,9 +33,13 @@ def version() -> None:
 @app.command("preview")
 def preview(
     applicationset: Annotated[Path, typer.Argument(exists=True, readable=True, dir_okay=False)],
+    renderer: Annotated[
+        str,
+        typer.Option("--renderer", help="Render source: 'fixture' or 'argocd'."),
+    ] = "fixture",
 ) -> None:
     try:
-        report = build_preview_report(load_rendered_fixture(applicationset))
+        report = build_preview_report(get_renderer_adapter(renderer).render(applicationset))
     except ArgoScopeError as error:
         raise typer.Exit(code=error.exit_code) from error
 
@@ -64,7 +68,9 @@ def check(
     ],
 ) -> None:
     try:
-        preview_report = build_preview_report(load_rendered_fixture(applicationset))
+        preview_report = build_preview_report(
+            get_renderer_adapter("fixture").render(applicationset)
+        )
         policy_report = evaluate_policy(load_policy(policy), preview_report)
     except ArgoScopeError as error:
         raise typer.Exit(code=error.exit_code) from error

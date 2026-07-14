@@ -35,3 +35,5 @@ uv run argoscope render tests/fixtures/review/compare-report.json --format markd
 ```
 
 `preview` works offline from rendered fixture data and returns generated application targets as JSON. `compare` reports added Applications, removed Applications, destination changes, and risk findings between two rendered states. `check` evaluates rendered Applications against policy guardrails and emits JSON violations. `render` converts compare and policy reports into Markdown suitable for pull-request discussion.
+
+The current renderer uses an offline fixture adapter. A live `argocd` CLI adapter is planned behind the same interface.
