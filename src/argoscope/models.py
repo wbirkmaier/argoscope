@@ -55,3 +55,21 @@ class PreviewReport(BaseModel):
     generated_applications: list[GeneratedApplication]
     clusters: list[str]
     namespaces: list[str]
+
+
+class ApplicationChange(BaseModel):
+    name: str
+    before_cluster: str
+    after_cluster: str
+    before_namespace: str
+    after_namespace: str
+    before_production_target: bool
+    after_production_target: bool
+
+
+class CompareReport(BaseModel):
+    base_applicationset: str
+    head_applicationset: str
+    added_applications: list[GeneratedApplication]
+    removed_applications: list[GeneratedApplication]
+    changed_applications: list[ApplicationChange]

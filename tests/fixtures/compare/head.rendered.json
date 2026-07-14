@@ -1,0 +1,35 @@
+{
+  "applicationset": "guestbook-matrix",
+  "generated_applications": [
+    {
+      "name": "guestbook-prod-canary",
+      "project": "platform",
+      "cluster": "https://prod-west.example.com",
+      "namespace": "guestbook-prod",
+      "repo_url": "https://github.com/example/platform-config.git",
+      "target_revision": "release-2026-08",
+      "path": "apps/guestbook/overlays/prod-canary",
+      "automated_prune": true,
+      "self_heal": true,
+      "production_target": true
+    },
+    {
+      "name": "guestbook-staging-west",
+      "project": "platform",
+      "cluster": "https://prod-west.example.com",
+      "namespace": "guestbook-prod",
+      "repo_url": "https://github.com/example/platform-config.git",
+      "target_revision": "release-2026-08",
+      "path": "apps/guestbook/overlays/staging-west",
+      "automated_prune": true,
+      "self_heal": true,
+      "production_target": true
+    }
+  ],
+  "clusters": [
+    "https://prod-west.example.com"
+  ],
+  "namespaces": [
+    "guestbook-prod"
+  ]
+}
