@@ -39,5 +39,21 @@
       "before_production_target": false,
       "after_production_target": true
     }
+  ],
+  "findings": [
+    {
+      "id": "new-production-application:guestbook-prod-canary",
+      "kind": "new_production_application",
+      "severity": "high",
+      "application": "guestbook-prod-canary",
+      "message": "new application is introduced directly into a production destination"
+    },
+    {
+      "id": "production-expansion:guestbook-staging-west",
+      "kind": "production_expansion",
+      "severity": "high",
+      "application": "guestbook-staging-west",
+      "message": "application now targets a production destination"
+    }
   ]
 }

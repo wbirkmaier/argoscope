@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from argoscope.models import ApplicationChange, CompareReport, PreviewReport
+from argoscope.models import ApplicationChange, BlastRadiusFinding, CompareReport, PreviewReport
 
 
 def compare_preview_reports(base: PreviewReport, head: PreviewReport) -> CompareReport:
@@ -8,6 +8,7 @@ def compare_preview_reports(base: PreviewReport, head: PreviewReport) -> Compare
     head_map = {application.name: application for application in head.generated_applications}
 
     changed_applications: list[ApplicationChange] = []
+    findings: list[BlastRadiusFinding] = []
     for name in sorted(set(base_map) & set(head_map)):
         base_application = base_map[name]
         head_application = head_map[name]
@@ -27,6 +28,39 @@ def compare_preview_reports(base: PreviewReport, head: PreviewReport) -> Compare
                     after_production_target=head_application.production_target,
                 )
             )
+        if not base_application.production_target and head_application.production_target:
+            findings.append(
+                BlastRadiusFinding(
+                    id=f"production-expansion:{name}",
+                    kind="production_expansion",
+                    severity="high",
+                    application=name,
+                    message="application now targets a production destination",
+                )
+            )
+        if not base_application.automated_prune and head_application.automated_prune:
+            findings.append(
+                BlastRadiusFinding(
+                    id=f"automated-prune-enabled:{name}",
+                    kind="automated_prune_enabled",
+                    severity="medium",
+                    application=name,
+                    message="automated prune is enabled in the head state",
+                )
+            )
+
+    for name in sorted(set(head_map) - set(base_map)):
+        application = head_map[name]
+        if application.production_target:
+            findings.append(
+                BlastRadiusFinding(
+                    id=f"new-production-application:{name}",
+                    kind="new_production_application",
+                    severity="high",
+                    application=name,
+                    message="new application is introduced directly into a production destination",
+                )
+            )
 
     return CompareReport(
         base_applicationset=base.applicationset,
@@ -34,4 +68,5 @@ def compare_preview_reports(base: PreviewReport, head: PreviewReport) -> Compare
         added_applications=[head_map[name] for name in sorted(set(head_map) - set(base_map))],
         removed_applications=[base_map[name] for name in sorted(set(base_map) - set(head_map))],
         changed_applications=changed_applications,
+        findings=sorted(findings, key=lambda item: item.id),
     )

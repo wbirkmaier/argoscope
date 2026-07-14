@@ -73,3 +73,12 @@ class CompareReport(BaseModel):
     added_applications: list[GeneratedApplication]
     removed_applications: list[GeneratedApplication]
     changed_applications: list[ApplicationChange]
+    findings: list[BlastRadiusFinding]
+
+
+class BlastRadiusFinding(BaseModel):
+    id: str
+    kind: str
+    severity: str
+    application: str
+    message: str

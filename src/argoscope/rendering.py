@@ -36,6 +36,7 @@ def _render_compare_markdown(report: CompareReport) -> str:
         f"Added applications: {len(report.added_applications)}",
         f"Removed applications: {len(report.removed_applications)}",
         f"Changed destinations: {len(report.changed_applications)}",
+        f"Findings: {len(report.findings)}",
         "",
     ]
     if report.added_applications:
@@ -61,6 +62,13 @@ def _render_compare_markdown(report: CompareReport) -> str:
                 f"`{application.after_namespace}`"
             )
             for application in report.changed_applications
+        )
+        lines.append("")
+    if report.findings:
+        lines.append("### Findings")
+        lines.extend(
+            f"- `{finding.application}`: `{finding.kind}` ({finding.severity}) - {finding.message}"
+            for finding in report.findings
         )
     return "\n".join(lines).rstrip()
 

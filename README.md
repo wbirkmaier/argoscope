@@ -34,4 +34,4 @@ uv run argoscope check tests/fixtures/guestbook-appset/applicationset.yaml --pol
 uv run argoscope render tests/fixtures/review/compare-report.json --format markdown
 ```
 
-`preview` works offline from rendered fixture data and returns generated application targets as JSON. `compare` reports added Applications, removed Applications, and destination or production-target changes between two rendered states. `check` evaluates rendered Applications against policy guardrails and emits JSON violations. `render` converts compare and policy reports into Markdown suitable for pull-request discussion.
+`preview` works offline from rendered fixture data and returns generated application targets as JSON. `compare` reports added Applications, removed Applications, destination changes, and risk findings between two rendered states. `check` evaluates rendered Applications against policy guardrails and emits JSON violations. `render` converts compare and policy reports into Markdown suitable for pull-request discussion.
