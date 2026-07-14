@@ -31,6 +31,7 @@ ArgoScope estimates the deployment blast radius of an Argo CD ApplicationSet cha
 uv run argoscope preview tests/fixtures/guestbook-appset/applicationset.yaml
 uv run argoscope compare tests/fixtures/compare/base.rendered.json tests/fixtures/compare/head.rendered.json
 uv run argoscope check tests/fixtures/guestbook-appset/applicationset.yaml --policy tests/fixtures/policy/prod-guardrails.yaml
+uv run argoscope render tests/fixtures/review/compare-report.json --format markdown
 ```
 
-`preview` works offline from rendered fixture data and returns generated application targets as JSON. `compare` reports added Applications, removed Applications, and destination or production-target changes between two rendered states. `check` evaluates rendered Applications against policy guardrails and emits JSON violations. Markdown review output lands in a later slice.
+`preview` works offline from rendered fixture data and returns generated application targets as JSON. `compare` reports added Applications, removed Applications, and destination or production-target changes between two rendered states. `check` evaluates rendered Applications against policy guardrails and emits JSON violations. `render` converts compare and policy reports into Markdown suitable for pull-request discussion.

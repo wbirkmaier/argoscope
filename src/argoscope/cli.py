@@ -10,6 +10,7 @@ from argoscope.diffing import compare_preview_reports
 from argoscope.exceptions import ArgoScopeError
 from argoscope.fixtures import load_rendered_fixture
 from argoscope.policy import evaluate_policy, load_policy
+from argoscope.rendering import load_render_input, render_markdown
 from argoscope.snapshot_io import load_preview_report
 
 app = typer.Typer(
@@ -69,6 +70,22 @@ def check(
         raise typer.Exit(code=error.exit_code) from error
 
     typer.echo(policy_report.model_dump_json(indent=2))
+
+
+@app.command("render")
+def render(
+    report: Annotated[Path, typer.Argument(exists=True, readable=True, dir_okay=False)],
+    output_format: Annotated[
+        str, typer.Option("--format", help="Only 'markdown' is currently supported.")
+    ] = "markdown",
+) -> None:
+    if output_format != "markdown":
+        raise typer.Exit(code=2)
+
+    try:
+        typer.echo(render_markdown(load_render_input(report)))
+    except ArgoScopeError as error:
+        raise typer.Exit(code=error.exit_code) from error
 
 
 def main(argv: Annotated[list[str] | None, typer.Argument(hidden=True)] = None) -> None:
