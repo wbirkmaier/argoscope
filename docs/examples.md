@@ -1,3 +1,7 @@
 # Examples
 
-Example preview, compare, and policy-check flows will be added as the analysis commands land.
+```bash
+uv run argoscope preview tests/fixtures/guestbook-appset/applicationset.yaml
+```
+
+The shipped fixture expands one ApplicationSet into three Applications across staging and production clusters.

@@ -1,0 +1,71 @@
+{
+  "applicationset": "guestbook-matrix",
+  "applications": [
+    {
+      "name": "guestbook-in-cluster",
+      "project": "platform",
+      "source": {
+        "repo_url": "https://github.com/example/platform-config.git",
+        "target_revision": "main",
+        "path": "apps/guestbook/base"
+      },
+      "destination": {
+        "server": "https://kubernetes.default.svc",
+        "namespace": "guestbook"
+      },
+      "sync_policy": {
+        "automated": {
+          "prune": false,
+          "self_heal": true
+        }
+      },
+      "labels": {
+        "environment": "dev"
+      }
+    },
+    {
+      "name": "guestbook-prod-west",
+      "project": "platform",
+      "source": {
+        "repo_url": "https://github.com/example/platform-config.git",
+        "target_revision": "release-2026-07",
+        "path": "apps/guestbook/overlays/prod-west"
+      },
+      "destination": {
+        "server": "https://prod-west.example.com",
+        "namespace": "guestbook-prod"
+      },
+      "sync_policy": {
+        "automated": {
+          "prune": true,
+          "self_heal": true
+        }
+      },
+      "labels": {
+        "environment": "prod"
+      }
+    },
+    {
+      "name": "guestbook-staging-west",
+      "project": "platform",
+      "source": {
+        "repo_url": "https://github.com/example/platform-config.git",
+        "target_revision": "release-2026-07",
+        "path": "apps/guestbook/overlays/staging-west"
+      },
+      "destination": {
+        "server": "https://staging-west.example.com",
+        "namespace": "guestbook-staging"
+      },
+      "sync_policy": {
+        "automated": {
+          "prune": true,
+          "self_heal": false
+        }
+      },
+      "labels": {
+        "environment": "staging"
+      }
+    }
+  ]
+}

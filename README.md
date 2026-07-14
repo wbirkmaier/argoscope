@@ -27,4 +27,8 @@ ArgoScope estimates the deployment blast radius of an Argo CD ApplicationSet cha
 
 ## Status
 
-Repository scaffolding and CLI baseline are in place. Rendering and blast-radius analysis land in later slices.
+```bash
+uv run argoscope preview tests/fixtures/guestbook-appset/applicationset.yaml
+```
+
+`preview` works offline from rendered fixture data and returns generated application targets as JSON. Compare, policy checks, and markdown review output land in later slices.
