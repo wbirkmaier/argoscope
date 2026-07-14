@@ -1,0 +1,18 @@
+{
+  "policy": "prod-guardrails",
+  "applicationset": "guestbook-matrix",
+  "violations": [
+    {
+      "rule_id": "prod-no-auto-prune",
+      "application": "guestbook-prod-west",
+      "severity": "high",
+      "message": "automated prune is enabled"
+    },
+    {
+      "rule_id": "prod-no-mutable-revision",
+      "application": "guestbook-prod-west",
+      "severity": "medium",
+      "message": "mutable revision detected: main"
+    }
+  ]
+}
