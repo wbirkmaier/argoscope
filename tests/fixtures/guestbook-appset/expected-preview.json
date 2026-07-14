@@ -19,7 +19,7 @@
       "cluster": "https://prod-west.example.com",
       "namespace": "guestbook-prod",
       "repo_url": "https://github.com/example/platform-config.git",
-      "target_revision": "release-2026-07",
+      "target_revision": "main",
       "path": "apps/guestbook/overlays/prod-west",
       "automated_prune": true,
       "self_heal": true,

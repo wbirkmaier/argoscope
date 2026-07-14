@@ -9,6 +9,7 @@ from argoscope.analysis import build_preview_report
 from argoscope.diffing import compare_preview_reports
 from argoscope.exceptions import ArgoScopeError
 from argoscope.fixtures import load_rendered_fixture
+from argoscope.policy import evaluate_policy, load_policy
 from argoscope.snapshot_io import load_preview_report
 
 app = typer.Typer(
@@ -51,6 +52,23 @@ def compare(
         raise typer.Exit(code=error.exit_code) from error
 
     typer.echo(report.model_dump_json(indent=2))
+
+
+@app.command("check")
+def check(
+    applicationset: Annotated[Path, typer.Argument(exists=True, readable=True, dir_okay=False)],
+    policy: Annotated[
+        Path,
+        typer.Option("--policy", exists=True, readable=True, dir_okay=False),
+    ],
+) -> None:
+    try:
+        preview_report = build_preview_report(load_rendered_fixture(applicationset))
+        policy_report = evaluate_policy(load_policy(policy), preview_report)
+    except ArgoScopeError as error:
+        raise typer.Exit(code=error.exit_code) from error
+
+    typer.echo(policy_report.model_dump_json(indent=2))
 
 
 def main(argv: Annotated[list[str] | None, typer.Argument(hidden=True)] = None) -> None:
