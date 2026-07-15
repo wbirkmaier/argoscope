@@ -6,7 +6,7 @@ ArgoScope still coupled preview behavior directly to fixture files, which would 
 
 - added a small renderer adapter interface
 - implemented a fixture-backed renderer adapter as the current shipped path
-- added an explicit placeholder adapter for future `argocd` CLI rendering so unsupported live use fails clearly rather than implicitly
+- added an explicit future adapter stub for `argocd` CLI rendering so unsupported live use fails clearly rather than implicitly
 
 ## Important decisions
 
